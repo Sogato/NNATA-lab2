@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Устанавливаем шрифт по умолчанию
 plt.rcParams['font.family'] = 'Arial'
-FILE_PATH = 'graphs_img/ROC_curve.png'
+FILE_PATH = 'img/graphs_img/ROC_curve.png'
 
 
 def plot_roc_curve(roc_data):
@@ -13,7 +12,6 @@ def plot_roc_curve(roc_data):
 
     :param roc_data: Словарь с именами моделей и соответствующими ROC-кривыми и значениями AUC.
     """
-
     plt.figure(figsize=(10, 8))
 
     for model_name, data in roc_data.items():
@@ -28,8 +26,6 @@ def plot_roc_curve(roc_data):
     plt.title('ROC-кривые для моделей', fontsize=16, fontweight='bold')
     plt.grid(True, linestyle='-', alpha=0.7, linewidth=1.5)
     plt.legend(loc="lower right", fontsize=12)
-
-    # Сохранение графика в файл
     plt.savefig(FILE_PATH, bbox_inches='tight')
     plt.close()
 
@@ -43,7 +39,6 @@ def plot_feature_importances(importances, feature_names, title, file_path):
     :param title: Заголовок графика.
     :param file_path: Путь для сохранения графика.
     """
-
     plt.figure(figsize=(12, 8))
     plt.title(title, fontsize=16, fontweight='bold')
     colors = plt.cm.viridis(np.linspace(0, 1, len(importances)))
@@ -51,8 +46,6 @@ def plot_feature_importances(importances, feature_names, title, file_path):
     plt.xticks(range(len(importances)), feature_names, rotation=90, fontsize=12)
     plt.xlim([-1, len(importances)])
     plt.ylabel('Значимость', fontsize=14, fontweight='bold')
-    plt.grid(True, linestyle='-', alpha=0.7, axis='y', linewidth=1.5)  # Только вертикальная сетка
-
-    # Сохранение графика в файл
+    plt.grid(True, linestyle='-', alpha=0.7, axis='y', linewidth=1.5)
     plt.savefig(file_path, bbox_inches='tight')
     plt.close()

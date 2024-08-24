@@ -24,10 +24,8 @@ def process_data(file_path):
     :param file_path: Путь к файлу с данными.
     :return: Кортеж из четырех элементов: X_train, X_test, y_train, y_test.
     """
-    # Загрузка данных
     data = pd.read_csv(file_path, header=None)
 
-    # Исследование данных
     print("Первые 5 строк датасета:")
     print(data.head())
 
@@ -51,7 +49,6 @@ def process_data(file_path):
     # Разделение на обучающую и тестовую выборки
     X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
 
-    # Вывод размеров выборок
     print("\nРазмеры обучающей и тестовой выборок:")
     print(f"Обучающая выборка: X_train: {X_train.shape}, y_train: {y_train.shape}")
     print(f"Тестовая выборка: X_test: {X_test.shape}, y_test: {y_test.shape}\n")
@@ -99,7 +96,7 @@ def train_classifiers(X_train, y_train):
     print("Обучение RandomForest...")
     rf_model = RandomForestClassifier(random_state=42)
     rf_param_grid = {
-        'n_estimators': [100, 200, 300],  # Выбираем небольшое количество деревьев для ускорения
+        'n_estimators': [100, 200, 300],
         'max_depth': [None, 10, 20, 30],
         'min_samples_split': [2, 5, 10],
         'min_samples_leaf': [1, 2, 4]
@@ -111,9 +108,9 @@ def train_classifiers(X_train, y_train):
     print("Обучение LogisticRegression...")
     lr_model = LogisticRegression(max_iter=5000, random_state=42)
     lr_param_grid = {
-        'C': [0.01, 0.1, 1, 10, 100],  # Регуляризация
-        'penalty': ['l1', 'l2'],  # Тип регуляризации
-        'solver': ['liblinear', 'saga']  # Выбираем solvers, поддерживающие l1 регуляризацию
+        'C': [0.01, 0.1, 1, 10, 100],
+        'penalty': ['l1', 'l2'],
+        'solver': ['liblinear', 'saga']
     }
     best_lr, _ = grid_search_model(lr_model, lr_param_grid, X_train, y_train)
     models['LogisticRegression'] = best_lr
@@ -126,8 +123,8 @@ def train_classifiers(X_train, y_train):
         'learning_rate': [0.01, 0.1, 0.2],
         'max_depth': [3, 5, 7],
         'subsample': [0.8, 1.0],
-        'lambda': [0, 1, 10],  # L2 регуляризация
-        'alpha': [0, 0.1, 1]  # L1 регуляризация
+        'lambda': [0, 1, 10],
+        'alpha': [0, 0.1, 1]
     }
     best_xgb, _ = grid_search_model(xgb_model, xgb_param_grid, X_train, y_train)
     models['XGBoost'] = best_xgb
@@ -145,7 +142,6 @@ def balance_dataset(X, y):
     :param y: Целевая переменная.
     :return: Сбалансированные X и y.
     """
-    # Преобразуем y в numpy массив
     y = y.values
 
     # Соединяем признаки и целевую переменную
@@ -234,8 +230,8 @@ def perform_stratified_kfold(model, X, y, k=5):
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = process_data(FILE_PATH)
 
-    X_train = X_train[:1000]
-    y_train = y_train[:1000]
+    X_train = X_train
+    y_train = y_train
 
     # Балансировка выборки
     X_train_balanced, y_train_balanced = balance_dataset(X_train, y_train)
@@ -254,6 +250,7 @@ if __name__ == "__main__":
 
     # Расчет ROC-кривых и AUC
     roc_data = calculate_roc_auc(best_models_original, X_test, y_test)
+
     # Построение и визуализация ROC-кривых
     plot_roc_curve(roc_data)
 
