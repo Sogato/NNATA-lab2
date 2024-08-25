@@ -230,9 +230,6 @@ def perform_stratified_kfold(model, X, y, k=5):
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test = process_data(FILE_PATH)
 
-    X_train = X_train
-    y_train = y_train
-
     # Балансировка выборки
     X_train_balanced, y_train_balanced = balance_dataset(X_train, y_train)
 

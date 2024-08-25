@@ -1,6 +1,4 @@
-# Реализация классификаторов
-
-## Описание
+# Классификаторы
 Этот проект посвящен построению и анализу классифицирующих моделей с использованием алгоритмов **RandomForest**, **LogisticRegression** и **XGBoost**.
 
 ## Функционал
@@ -34,7 +32,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-# Результаты исследования
 ## Датасет
 Обучение и тестирование проводилось с использованием датасета для прогнозирования типа лесного покрова по картографическим переменным.
 ![Статистика датасета](img/github_img/dataset_stats.png)
@@ -56,22 +53,22 @@ python main.py
 ## Значимость признаков
 Графики значимости признаков для моделей RandomForest, XGBoost и LogisticRegression, обученных на исходных и сбалансированных выборках. 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/RandomForest_feature_importances_original.png" alt="Значимость признаков RF Original" style="width: 100%;">
   </div>
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/RandomForest_feature_importances_balanced.png" alt="Значимость признаков RF Balanced" style="width: 100%;">
   </div>
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/LogisticRegression_feature_importances_original.png" alt="Значимость признаков LG Original" style="width: 100%;">
   </div>
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/LogisticRegression_feature_importances_balanced.png" alt="Значимость признаков LG Balanced" style="width: 100%;">
   </div>
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/XGBoost_feature_importances_original.png" alt="Значимость признаков XGB Original" style="width: 100%;">
   </div>
-  <div style="flex: 1; min-width: 45%;">
+  <div style="flex: 1; min-width: 30%;">
     <img src="img/graphs_img/XGBoost_feature_importances_balanced.png" alt="Значимость признаков XGB Balanced" style="width: 100%;">
   </div>
 </div>
@@ -87,10 +84,10 @@ python main.py
 
 ## Обучение
 В рамках второго этапа лабораторной работы были построены классифицирующие модели с использованием алгоритмов `RandomForest`, `LogisticRegression` и `XGBoost`. Основной задачей было проведение подбора гиперпараметров для каждой модели с использованием `GridSearchCV`, чтобы определить наилучшие параметры и достичь высокой точности классификации.
+
 ![Результаты обучения](img/github_img/training_model.png)
 
 ### RandomForestClassifier
-
 Для RandomForest были исследованы следующие гиперпараметры:
 - `n_estimators`: [100, 200, 300] - Количество деревьев в лесу.
 - `max_depth`: [None, 10, 20, 30] - Максимальная глубина дерева.
@@ -103,7 +100,6 @@ python main.py
 
 
 ### LogisticRegression
-
 Для модели логистической регрессии были исследованы следующие гиперпараметры:
 - `C`: [0.01, 0.1, 1, 10, 100] - Коэффициент регуляризации (обратный коэффициент регуляризации).
 - `penalty`: ['l1', 'l2'] - Тип регуляризации.
@@ -115,7 +111,6 @@ python main.py
 
 
 ### XGBoost
-
 Для XGBoost были исследованы следующие гиперпараметры:
 - `n_estimators`: [100, 200, 300] - Количество деревьев.
 - `learning_rate`: [0.01, 0.1, 0.2] - Скорость обучения.
@@ -141,10 +136,10 @@ python main.py
 
 ## K-блочная стратифицированная проверка
 В рамках оценки моделей были проведены эксперименты с использованием K-блочной стратифицированной проверки. Данная техника позволяет более точно оценить производительность моделей за счет многократного разделения данных на тренировочные и тестовые выборки, что минимизирует влияние случайных разбиений.
+
 ![K-блочная стратифицированная проверка](img/github_img/stratified_kfold.png)
 
 #### 1. RandomForestClassifier
-
 - **Средняя точность:** 0.9543
 - **Средняя Precision:** 0.9046
 - **Средняя Recall:** 0.7629
@@ -153,7 +148,6 @@ python main.py
 Модель RandomForestClassifier показала высокие результаты, демонстрируя точность 95.43%. Несмотря на это, значение Recall (0.7629) указывает на возможность пропуска некоторых положительных классов, что отразилось на значении F1-score (0.8277). Тем не менее, Precision остается высоким, что говорит о точности предсказанных положительных классов.
 
 #### 2. LogisticRegression
-
 - **Средняя точность:** 0.9306
 - **Средняя Precision:** 0.8140
 - **Средняя Recall:** 0.6711
@@ -162,7 +156,6 @@ python main.py
 LogisticRegression, как и ожидалось, продемонстрировала более низкие результаты по сравнению с деревьями решений. Средняя точность составила 93.06%, однако Recall (0.6711) и F1-score (0.7355) показывают, что модель не так хорошо справляется с выявлением положительных классов по сравнению с RandomForest и XGBoost. Тем не менее, Precision остается на приемлемом уровне.
 
 #### 3. XGBClassifier
-
 - **Средняя точность:** 0.9563
 - **Средняя Precision:** 0.8832
 - **Средняя Recall:** 0.8025
